@@ -30,7 +30,31 @@ public class RijndaelCipher {
 		16 	13	14	15	
 		 */
 		
+		byte temp1, temp2;
 		
+		// 1st row untouched
+		
+		// 2nd row
+		temp1 = cipherMe[4];
+		cipherMe[4] = cipherMe[5];
+		cipherMe[5] = cipherMe[6];
+		cipherMe[6] = cipherMe[7];
+		cipherMe[7] = temp1;
+		
+		// 3rd row
+		temp1 = cipherMe[8];
+		temp2 = cipherMe[9];
+		cipherMe[8] = cipherMe[10];
+		cipherMe[9] = cipherMe[11];
+		cipherMe[10] = temp1;
+		cipherMe[11] = temp2;
+		
+		//4th row
+		temp1 = cipherMe[15];
+		cipherMe[15] = cipherMe[14];
+		cipherMe[14] = cipherMe[13];
+		cipherMe[13] = cipherMe[12];
+		cipherMe[12] = temp1;
 		
 		return cipherMe;
 	}
@@ -53,6 +77,9 @@ public class RijndaelCipher {
 	private static byte[] addRoundKey(byte[] cipherMe, byte[] roundKey) {
 		
 		// bitwise XOR each element
+		for (int i = 0; i < cipherMe.length; i++) {
+			cipherMe[i] = (byte)((int)cipherMe[i]^(int)roundKey[i]);
+		}
 		
 		return cipherMe;
 	}
