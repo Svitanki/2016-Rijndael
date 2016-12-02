@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 // I will go back and make some of those expanded loops into actual loops 
 // sometime when i do not have a headache
 // I apologize ahead of time
@@ -252,53 +254,73 @@ public class RijndaelCipher {
 	}
 	
 	
-	private static byte[] encipher(byte[] plaintext) {
+	private static byte[] encipher(byte[] ciphertext, byte[] key) {
 		
-		// cipherkey -> key schedule
-			// return roundKey 0-10
-		
-		
+		keySchedule(key);
+		// creates full set of roundkeys in roundKey[]
 		
 		
 		// encipher plain text
 		// ---------------------
 		
 		// addRoundKey (cipher key)
+		addRoundKey(ciphertext, key);
 		
 		// for i=0 -> 9
+		for (int i = 1; i<11; i++){
 			// subBytes
+			subBytes(ciphertext);
 			// shiftRows
+			shiftRows(ciphertext);
 			// mixColumns
+			if (i != 10)
+				mixColumns(ciphertext);
 			// addRoundKey (roundKey[i])
-		
-		// subBytes
-		// shiftRows
-		// addRoundKey (roundKey[10])
-		
-		// return resulting ciphertext
-		
-		
-		byte empty[] = {' '};
-		return empty;
+			byte thisRoundsKey[] = new byte[16];
+			for (int j = 0; j<16; j++){
+				thisRoundsKey[j] = roundKey[i*16 + j];
+			}
+			addRoundKey(ciphertext, thisRoundsKey);
+		}
+			
+		return ciphertext;
 	}
 	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		Scanner scanner = new Scanner(System.in); 
 		
 		// FOR THE PURPOSES OF THIS CODE, I AM ASSUMING THAT KEY IS ALWAYS 128 BITS, AND SO IS PLAINTEXT
 		
 		//if a plaintext message is 128 bits, in chars, it can have 16 chars
+		System.out.println("Only first 16 characters will be accepted. Please enter.");
 		
-		byte plainarr[]={'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p'};
+		System.out.print("Plaintext: ");
+		String inputPlaintext = scanner.nextLine();
 		
-		// generate 128-bit key; aka, generate 16 random (byte)s
+		System.out.print("Key: ");
+		String inputKey = scanner.nextLine();
+		
+		byte plainarr[]= new byte[16];
+		byte key[] = new byte[16];
+		for (int i = 0; i<16; i++){
+			plainarr[i] = (byte)inputPlaintext.charAt(i);
+			key[i] = (byte)inputKey.charAt(i);
+		}
+		
+		System.out.print("Plaintext in Hex: ");
+		for (int i = 0; i<plainarr.length; i++)
+			System.out.print(Integer.toHexString(plainarr[i] & 0xFF) + " ");
+		System.out.println("");
 		
 		// input plainarr and key into ciphering
+		encipher(plainarr, key);
 		
-		// this is just for testing purposes
+		System.out.print("Ciphertext in Hex: ");
 		for (int i = 0; i<plainarr.length; i++)
-			System.out.println(Integer.toBinaryString((plainarr[i])));
+			System.out.print(Integer.toHexString(plainarr[i] & 0xFF) + " ");
+		System.out.println("");
 
 	}
 

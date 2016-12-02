@@ -1,0 +1,17 @@
+TEST CASE 1
+
+Only first 16 characters will be accepted. Please enter.
+Plaintext: abcdefghijklmnop
+Key: 1234567891234567
+Plaintext in Hex: 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f 70 
+Ciphertext in Hex: b8 a1 d1 1a b5 5 0 e5 10 b8 f8 23 1f c b4 a1 
+
+=======================================================================
+
+TEST CASE 2
+
+Only first 16 characters will be accepted. Please enter.
+Plaintext: ivebeenawaketool
+Key: ongcodingthisrip
+Plaintext in Hex: 69 76 65 62 65 65 6e 61 77 61 6b 65 74 6f 6f 6c 
+Ciphertext in Hex: e1 93 73 cd 7f 77 f1 c5 bb 9e 68 f3 eb de 65 21 
